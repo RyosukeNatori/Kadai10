@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean onTouch(View v, MotionEvent mv){
             switch (mv.getAction()){
                 case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_MOVE:
                     ra.x=(int)mv.getX();
                     break;
             }
@@ -73,10 +74,14 @@ public class MainActivity extends AppCompatActivity {
             void move(){
                 x=x+dx;
                 y=y+dy;
+                if(y>screen_height){
+                    dx=0;
+                    dy=0;
+                }
                 if(x<0||x>screen_width){
                     dx=dx*-1;
                 }
-                if(y<0||y>screen_height){
+                if(y<0||(y>screen_height-20&&ra.x<x&&ra.x+100>x)){
                     dy=dy*-1;
                 }
             }
@@ -97,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     holder.unlockCanvasAndPost(canvas);
                 }
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(1);
                 }catch (InterruptedException e){
                     e.printStackTrace();
                 }
