@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             switch (mv.getAction()){
                 case MotionEvent.ACTION_DOWN:
                 case MotionEvent.ACTION_MOVE:
-                    ra.x=(int)mv.getX();
+                    ra.x=(int)mv.getX()-100;
                     break;
             }
             return true;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             void draw(Canvas ca){
                 Paint paint=new Paint();
                 paint.setColor(Color.WHITE);
-                ca.drawRect(x,screen_height-20,x+100,screen_height-10,paint);
+                ca.drawRect(x,screen_height-20,x+200,screen_height-10,paint);
             }
         }
         class Ball{
@@ -78,11 +78,27 @@ public class MainActivity extends AppCompatActivity {
                     dx=0;
                     dy=0;
                 }
-                if(x<0||x>screen_width){
+                else if(x<0||x>screen_width){
                     dx=dx*-1;
                 }
-                if(y<0||(y>screen_height-20&&ra.x<x&&ra.x+100>x)){
+                else if(y<=0){
                     dy=dy*-1;
+                }
+                else if(y>screen_height-20&&ra.x<=x&&ra.x+50>x){
+                    dy=dy*-1;
+                    dx=dx-10;
+                }
+                else if(y>screen_height-20&&ra.x+50<=x&&ra.x+100>x){
+                    dy=dy*-1;
+                    dx=dx-5;
+                }
+                else if(y>screen_height-20&&ra.x+100<=x&&ra.x+150>x){
+                    dy=dy*-1;
+                    dx=dx+5;
+                }
+                else if(y>screen_height-20&&ra.x+150<=x&&ra.x+200>=x){
+                    dy=dy*-1;
+                    dx=dx+10;
                 }
             }
             void draw(Canvas ca){
