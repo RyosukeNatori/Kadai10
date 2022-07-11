@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         class Ball{
-            int x=0,y=0,r=10,dx=5,dy=5;
+            float x=0,y=0,r=10,dx=2.5f,dy=5;
             void move(){
                 x=x+dx;
                 y=y+dy;
@@ -84,21 +84,61 @@ public class MainActivity extends AppCompatActivity {
                 else if(y<=0){
                     dy=dy*-1;
                 }
-                else if(y>screen_height-20&&ra.x<=x&&ra.x+50>x){
+                else if(y>screen_height-20&&ra.x<=x&&ra.x+25>x){
                     dy=dy*-1;
-                    dx=dx-10;
+                    dx=dx-4;
+                    if(dx<-2.5f){
+                        dx=-2.5f;
+                    }
                 }
-                else if(y>screen_height-20&&ra.x+50<=x&&ra.x+100>x){
+                else if(y>screen_height-20&&ra.x+25<=x&&ra.x+50>x){
                     dy=dy*-1;
-                    dx=dx-5;
+                    dx=dx-3;
+                    if(dx<-2.5f){
+                        dx=-2.5f;
+                    }
                 }
-                else if(y>screen_height-20&&ra.x+100<=x&&ra.x+150>x){
+                else if(y>screen_height-20&&ra.x+50<=x&&ra.x+75>x){
                     dy=dy*-1;
-                    dx=dx+5;
+                    dx=dx-2;
+                    if(dx<-2.5f){
+                        dx=-2.5f;
+                    }
                 }
-                else if(y>screen_height-20&&ra.x+150<=x&&ra.x+200>=x){
+                else if(y>screen_height-20&&ra.x+75<=x&&ra.x+100>x){
                     dy=dy*-1;
-                    dx=dx+10;
+                    dx=dx-1;
+                    if(dx<-2.5f){
+                        dx=-2.5f;
+                    }
+                }
+                else if(y>screen_height-20&&ra.x+100<=x&&ra.x+125>x){
+                    dy=dy*-1;
+                    dx=dx+1;
+                    if(dx>2.5f){
+                        dx=2.5f;
+                    }
+                }
+                else if(y>screen_height-20&&ra.x+125<=x&&ra.x+150>x){
+                    dy=dy*-1;
+                    dx=dx+2;
+                    if(dx>2.5f){
+                        dx=2.5f;
+                    }
+                }
+                else if(y>screen_height-20&&ra.x+150<=x&&ra.x+175>=x){
+                    dy=dy*-1;
+                    dx=dx+3;
+                    if(dx>2.5f){
+                        dx=2.5f;
+                    }
+                }
+                else if(y>screen_height-20&&ra.x+175<=x&&ra.x+200>=x){
+                    dy=dy*-1;
+                    dx=dx+4;
+                    if(dx>2.5f){
+                        dx=2.5f;
+                    }
                 }
             }
             void draw(Canvas ca){
