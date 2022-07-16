@@ -43,9 +43,17 @@ public class MainActivity extends AppCompatActivity {
         int screen_height;
         Ball ba;
         Racket ra;
+        Block[] br=new Block[20];
         public void surfaceChanged(SurfaceHolder holder,int format,int width,int height){
             screen_height=height;
             screen_width=width;
+            int count=0;
+            for(int i=0;i<2;i++){
+                for(int j=0;j<10;j++){
+                    br[count]=new Block(i,j);
+                    count++;
+                }
+            }
         }
         public void surfaceCreated(SurfaceHolder holder){
             ba=new Ball();
@@ -67,6 +75,42 @@ public class MainActivity extends AppCompatActivity {
                 Paint paint=new Paint();
                 paint.setColor(Color.WHITE);
                 ca.drawRect(x,screen_height-20,x+200,screen_height-10,paint);
+            }
+        }
+
+        class Block{
+            float x,y,w,h;
+            int count2;
+            Paint paint=new Paint();
+            Block(int i,int j){
+                count2=j%3;
+                x=(float) screen_width/10*j;
+                y=(float) screen_width/10*i;
+                w=(float) screen_width/10;
+                h=(float) screen_width/10;
+                if(count2==0){
+                    paint.setColor(Color.BLUE);
+                }
+                else if(count2==1){
+                    paint.setColor(Color.RED);
+                }
+                else{
+                    paint.setColor(Color.GREEN);
+                }
+            }
+            void draw(Canvas ca){
+//                Paint paint=new Paint();
+//                if(count%3==0){
+//                    paint.setColor(Color.BLUE);
+//                }
+//                else if(count%3==1){
+//                    paint.setColor(Color.RED);
+//                }
+//                else{
+//                    paint.setColor(Color.GREEN);
+//                }
+                ca.drawRect(x,y,w,h,paint);
+                System.out.println(count2);
             }
         }
         class Ball{
@@ -155,6 +199,9 @@ public class MainActivity extends AppCompatActivity {
                     ba.move();
                     ba.draw(canvas);
                     ra.draw(canvas);
+                    for(int i=0;i<20;i++){
+                        br[i].draw(canvas);
+                    }
                     holder.unlockCanvasAndPost(canvas);
                 }
                 try {
