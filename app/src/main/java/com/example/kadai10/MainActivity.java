@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     Thread th;
     SurfaceHolder holder;
     BallSurfaceView bsv;
+    int count;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         public void surfaceChanged(SurfaceHolder holder,int format,int width,int height){
             screen_height=height;
             screen_width=width;
-            int count=0;
             for(int i=0;i<2;i++){
                 for(int j=0;j<10;j++){
                     br[count]=new Block(i,j);
@@ -80,18 +80,18 @@ public class MainActivity extends AppCompatActivity {
 
         class Block{
             float x,y,w,h;
-            int count2;
-            Paint paint=new Paint();
+            int count2=count;
+            Paint paint;
             Block(int i,int j){
-                count2=j%3;
                 x=(float) screen_width/10*j;
                 y=(float) screen_width/10*i;
-                w=(float) screen_width/10;
-                h=(float) screen_width/10;
-                if(count2==0){
+                w=(float) screen_width/10+x;
+                h=(float) screen_width/10+y;
+                paint=new Paint();
+                if(count2%3==0){
                     paint.setColor(Color.BLUE);
                 }
-                else if(count2==1){
+                else if(count2%3==1){
                     paint.setColor(Color.RED);
                 }
                 else{
@@ -99,22 +99,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             void draw(Canvas ca){
-//                Paint paint=new Paint();
-//                if(count%3==0){
-//                    paint.setColor(Color.BLUE);
-//                }
-//                else if(count%3==1){
-//                    paint.setColor(Color.RED);
-//                }
-//                else{
-//                    paint.setColor(Color.GREEN);
-//                }
                 ca.drawRect(x,y,w,h,paint);
-                System.out.println(count2);
+                System.out.println(paint.getColor());
             }
         }
         class Ball{
-            float x=0,y=0,r=10,dx=2.5f,dy=5;
+            float x=0,y=200,r=10,dx=2.5f,dy=5;
             void move(){
                 x=x+dx;
                 y=y+dy;
@@ -183,6 +173,23 @@ public class MainActivity extends AppCompatActivity {
                     if(dx>2.5f){
                         dx=2.5f;
                     }
+                }
+                int count3=0;
+                for(int i=0;i<20;i++){
+                    if(br[i].paint.getColor()==0){
+                        count3++;
+                    }
+                    if(((y<=br[i].h&&br[i].h-5<=y)||(br[i].y<=y&&y<=br[i].y+5))&&br[i].x<=x&&x<=br[i].w&&br[i].paint.getColor()!=0) {
+                        br[i].paint.setColor(Color.argb(0,0,0,0));
+                        dy=dy*-1;
+                    }
+                    else if(y<=br[i].h&&br[i].y<=y&&((br[i].x<=x&&x<=br[i].x+3)||(x<=br[i].w&&br[i].w-3<=x))&&br[i].paint.getColor()!=0) {
+                        br[i].paint.setColor(Color.argb(0, 0, 0, 0));
+                        dx = dx * -1;
+                    }
+                }
+                if(count3>=20){
+                    th=null;
                 }
             }
             void draw(Canvas ca){
